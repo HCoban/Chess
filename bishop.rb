@@ -1,4 +1,6 @@
 require_relative 'sliding_piece'
+require_relative 'piece'
+
 
 class Bishop < Piece
   include Slideable
@@ -8,7 +10,7 @@ class Bishop < Piece
   end
 
   def symbol
-    "B" # ♗
+    "♗ " 
   end
 
 end

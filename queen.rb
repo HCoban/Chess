@@ -1,4 +1,6 @@
 require_relative 'sliding_piece'
+require_relative 'piece'
+
 
 class Queen < Piece
   include Slideable
@@ -8,7 +10,7 @@ class Queen < Piece
   end
 
   def symbol
-    "Q" # ♗
+    "♕ "
   end
 
 end

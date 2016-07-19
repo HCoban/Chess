@@ -9,10 +9,11 @@ class NullPiece
   end
 
   def to_s
-    " "
+    "  "
   end
 
   def color
+    nil
   end
 
   def moves

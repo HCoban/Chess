@@ -1,4 +1,6 @@
 require_relative 'sliding_piece'
+require_relative 'piece'
+
 
 class Rook < Piece
   include Slideable
@@ -8,7 +10,7 @@ class Rook < Piece
   end
 
   def symbol
-    "R" # ♗
+    "♖ "
   end
 
 end
