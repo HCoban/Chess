@@ -1,16 +1,18 @@
+require 'byebug'
 require 'colorize'
 require_relative 'board'
 require_relative 'cursorable'
 
 class Display
   attr_reader :cursor_pos
+  attr_accessor :board
   include Cursorable
 
   def initialize(board)
     @board = board
     @cursor_pos = [0, 0]
     @selected = false
-    @debug = true
+    @debug = false
   end
 
   def cursor
@@ -19,19 +21,8 @@ class Display
 
   def test
     until game_over?
-      pos = nil
-      until pos
-        render
-        pos = self.get_input
-      end
 
-      target = nil
-      until target
-        render
-        target = self.get_input
-      end
-      @board.move(pos, target)
-      render
+
     end
 
     render
@@ -39,6 +30,7 @@ class Display
   end
 
   def render
+
     system("clear")
     @board.grid.each_with_index do |row, i|
       print i
@@ -56,14 +48,18 @@ class Display
   end
 
   def colors(pos)
+    if !@board[pos].empty?
+      color = @board[pos].color
+    end
+
     if @cursor_pos == pos
-      bg = :black
-    # elsif !@board[pos].empty? || @board[@cursor_pos].moves.include?(pos)
-    #   bg = :yelllow
+      bg = :green
+    elsif !@board[@cursor_pos].empty? && @board[@cursor_pos].moves.include?(pos)
+      bg = :red
     else
       bg = :blue
     end
-    return {:background => bg, :color => :red}
+    return {:background => bg, :color => color}
   end
 
   def game_over?

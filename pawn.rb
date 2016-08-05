@@ -18,9 +18,9 @@ class Pawn < Piece
   protected
 
   def at_start_row?
-    if color == :black && @pos.first == 1
+    if color == :black && @pos.first == 6
       return true
-    elsif color == :white && @pos.first == 6
+    elsif color == :white && @pos.first == 1
       return true
     end
     false
@@ -52,17 +52,22 @@ class Pawn < Piece
   def side_attacks
     moves = []
     if color == :black
-      if @board[[@pos.first - 1, @pos[1] - 1]].color == :white
+      pos = [@pos.first - 1, @pos[1] - 1]
+
+      if @board.in_bounds?(pos) && @board[pos].color == :white
         moves << [@pos.first - 1, @pos[1] - 1]
       end
-      if @board[[@pos.first - 1, @pos[1] + 1]].color == :white
+      pos = [@pos.first - 1, @pos[1] + 1]
+      if @board.in_bounds?(pos) && @board[pos].color == :white
         moves << [@pos.first - 1, @pos[1] + 1]
       end
     elsif color == :white
-      if @board[[@pos.first + 1, @pos[1] - 1]].color == :black
+      pos = [@pos.first + 1, @pos[1] - 1]
+      if @board.in_bounds?(pos) && @board[pos].color == :black
         moves << [@pos.first + 1, @pos[1] - 1]
       end
-      if @board[[@pos.first + 1, @pos[1] + 1]].color == :black
+      pos = [@pos.first + 1, @pos[1] + 1]
+      if @board.in_bounds?(pos) && @board[pos].color == :black
         moves << [@pos.first + 1, @pos[1] + 1]
       end
     end

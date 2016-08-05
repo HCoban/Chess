@@ -14,6 +14,7 @@ class Board
 
   def initialize
     @grid = Array.new(8) { Array.new(8, NullPiece.instance) }
+    populate
   end
 
   def [](pos)
@@ -26,6 +27,47 @@ class Board
     @grid[x][y] = value
   end
 
+  def populate
+    [[7, 0], [7, 7]].each do |pos|
+      self[pos] = Rook.new(pos, self, :black)
+    end
+
+    [[7, 1], [7, 6]].each do |pos|
+      self[pos] = Knight.new(pos, self, :black)
+    end
+
+    [[7, 2], [7, 5]].each do |pos|
+      self[pos] = Bishop.new(pos, self, :black)
+    end
+
+    self[[7, 3]] = Queen.new([7, 3], self, :black)
+    self[[7, 4]] = King.new([7, 4], self, :black)
+
+    @grid[6].each_with_index do |row, i|
+      self[[6, i]] = Pawn.new([6, i], self, :black)
+    end
+
+    [[0, 0], [0, 7]].each do |pos|
+      self[pos] = Rook.new(pos, self, :white)
+    end
+
+    [[0, 1], [0, 6]].each do |pos|
+      self[pos] = Knight.new(pos, self, :white)
+    end
+
+    [[0, 2], [0, 5]].each do |pos|
+      self[pos] = Bishop.new(pos, self, :white)
+    end
+
+    self[[0, 3]] = Queen.new([0, 3], self, :white)
+    self[[0, 4]] = King.new([0, 4], self, :white)
+
+    @grid[1].each_with_index do |row, i|
+      self[[1, i]] = Pawn.new([1, i], self, :white)
+    end
+
+  end
+
   def move(start, end_pos)
 
     begin
@@ -36,10 +78,12 @@ class Board
       end
     rescue ArgumentError => e
       puts e.message
+      sleep(1)
       return
     end
 
     self[end_pos] = self[start]
+    self[end_pos].pos = end_pos
     self[start] = NullPiece.instance
   end
 
@@ -54,6 +98,7 @@ class Board
     end
 
     self[end_pos] = self[start]
+    self[end_pos].pos = end_pos
     self[start] = NullPiece.instance
   end
 
@@ -113,9 +158,9 @@ end
 if __FILE__ == $PROGRAM_NAME
   b = Board.new
   d = Display.new(b)
-  b[[3,5]] = King.new([3, 5], b, :white)
-  b[[7,7]] = Rook.new([7, 7], b, :white)
-  b[[1,7]] = King.new([1, 7], b, :black)
+  # b[[3,5]] = King.new([3, 5], b, :white)
+  # b[[7,7]] = Rook.new([7, 7], b, :white)
+  # b[[1,7]] = King.new([1, 7], b, :black)
   # b[[2,2]] = Bishop.new([2,2], b, :white)
   # b[[1,0]] = Rook.new([1,0], b, :black)
   # b[[5,7]] = Queen.new([5,7], b, :white)
